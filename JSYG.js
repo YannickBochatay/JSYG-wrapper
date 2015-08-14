@@ -1,10 +1,10 @@
 (function(root,factory) {
 	
 	if (typeof define == "function" && define.amd) define(["jquery"],factory);
-	else if (root.jQuery) root.JSYG = factory(root.jQuery);
-	else throw new Error("jQuery is needed");
+	else if (!root.jQuery) throw new Error("jQuery is needed");
+	else root.JSYG = factory(jQuery);	
 	
-}(this,function(jQuery) {
+})(this,function(jQuery) {
 			
 	"use strict";
 		
@@ -22,7 +22,7 @@
 		
 		if (!(this instanceof JSYG)) return new JSYG(arg,context);
 		else {
-			//pour les appels Ã  this.constructor() dans jQuery sans mettre le merdier
+			//pour les appels à this.constructor() dans jQuery sans mettre le merdier
 			for (var n in this) {
 				if (this.hasOwnProperty(n)) return new JSYG(arg,context);
 			}
@@ -40,7 +40,7 @@
 			
 			if (arg.charAt(0) === "<" && arg.charAt( arg.length - 1 ) === ">" && arg.length >= 3) {
 			
-				//cas spÃ©cial pour crÃ©er un lien svg
+				//cas spécial pour créer un lien svg
 				if (rsvgLink.test(arg)) array = [ document.createElementNS(NS.svg,'a') ];
 				else {
 						
@@ -62,7 +62,7 @@
 	JSYG.prototype.constructor = JSYG;
 	
 	/**
-	 * Liste des propriÃ©tÃ©s SVG stylables en css
+	 * Liste des propriétés SVG stylables en css
 	 */
 	JSYG.svgCssProperties = [ 'font','font-family','font-size','font-size-adjust','font-stretch','font-style','font-variant','font-weight', 'direction','letter-spacing','text-decoration','unicode-bidi','word-spacing', 'clip','color','cursor','display','overflow','visibility', 'clip-path','clip-rule','mask','opacity', 'enable-background','filter','flood-color','flood-opacity','lighting-color','stop-color','stop-opacity','pointer-events', 'color-interpolation','color-interpolation-filters','color-profile','color-rendering','fill','fill-opacity','fill-rule','image-rendering','marker','marker-end','marker-mid','marker-start','shape-rendering','stroke','stroke-dasharray','stroke-dashoffset','stroke-linecap','stroke-linejoin','stroke-miterlimit','stroke-opacity','stroke-width','text-rendering','alignment-baseline','baseline-shift','dominant-baseline','glyph-orientation-horizontal','glyph-orientation-vertical','kerning','text-anchor','writing-mode' ];
 	/**
@@ -73,6 +73,22 @@
 	 * Liste des elements SVG pouvant utiliser l'attribut viewBox
 	 */
 	JSYG.svgViewBoxTags = ['svg','symbol','image','marker','pattern','view'];
+	/**
+	 * Liste des balises des formes svg
+	 */
+	JSYG.svgShapes = ['circle','ellipse','line','polygon','polyline','path','rect'];
+	/**
+	 * Liste des balises des conteneurs svg
+	 */
+	JSYG.svgContainers = ['a','defs','glyphs','g','marker','mask','missing-glyph','pattern','svg','switch','symbol'];
+	/**
+	 * Liste des balises des éléments graphiques svg
+	 */
+	JSYG.svgGraphics = ['circle','ellipse','line','polygon','polyline','path','rect','use','image','text'];
+	/**
+	 * Liste des balises des éléments textes svg
+	 */
+	JSYG.svgTexts = ['altGlyph','textPath','text','tref','tspan'];
 
 	
 	JSYG.ns = NS;
@@ -86,13 +102,21 @@
 		var parent = new JSYG(this[0]).parent();
 		return parent.length && !parent.isSVG();
 	};
+	
+	/**
+	 * récupère le nom de la balise en minuscule du premier élément de la collection (sinon html renvoie majuscules et svg minuscules)
+	 * @returns {String}
+	 */
+	JSYG.prototype.getTag = function() {
+		return this[0] && this[0].tagName && this[0].tagName.toLowerCase();
+	};
 		
 	function xlinkHref(val) {
-		
+				
 		if (val == null) {
 			return (this.isSVG() ? this[0].getAttributeNS(NS.xlink,'href') : this[0].href) || "";
 		}
-		
+				
 		this.each(function() {
 				
 			if (this.namespaceURI == NS.svg){
@@ -118,8 +142,10 @@
 	}
 	
 	JSYG.prototype.attr = function(name,value) {
-				
-		if ($.isPlainObject(name)) {
+		
+		if (!name) return this;
+		
+		if (typeof name == "object") {
 			
 			for (var n in name) this.attr(n,name[n]);
 			return this;
@@ -141,7 +167,16 @@
 					this.setAttribute("viewBox",value);					
 			});
 		}
-		else return $.fn.attr.apply(this,arguments);
+		else {
+			
+			if (value === undefined) return $.fn.attr.apply(this,arguments);
+			
+			return this.each(function() {
+				//jQuery passe tous les attributs en minuscule, ce qui n'est pas le cas des attributs SVG
+				if (new JSYG(this).isSVG()) this.setAttribute(name,value);
+				else $.attr(this,name,value); 
+			});			
+		}
 	};
 	
 	JSYG.prototype.attrRemove = function(name) {
@@ -167,7 +202,7 @@
 	};
 	
 	JSYG.makeArray = function(list) {
-				
+						
 		if (typeof list == 'object' && typeof list.numberOfItems == "number") { //SVGList
 		
 			var tab = [];
@@ -196,7 +231,7 @@
 					if (arg === 'farthest') elmt = this.farthestViewportElement;
 					else elmt = this.nearestViewportElement;
 					
-					if (!elmt) { //les Ã©lÃ©ments non tracÃ©s (dans une balise defs) ne renvoient rien, par simplicitÃ© on renvoit la balise svg parente
+					if (!elmt) { //les éléments non tracés (dans une balise defs) ne renvoient rien, par simplicité on renvoit la balise svg parente
 						
 						elmt = this.parentNode;
 						
@@ -311,7 +346,7 @@
 				return el.classList && typeof el.classList.add === 'function';
 			}()),
 			
-			//classList peut exister sur les Ã©lÃ©ments SVG mais Ãªtre sans effet...
+			//classList peut exister sur les éléments SVG mais être sans effet...
 			svg : (function() {
 				var el = new JSYG('<ellipse>')[0];
 				if (!el || !el.classList || !el.classList.add) return false;
@@ -377,7 +412,7 @@
 			};
 			
 			if (tag === 'use' && !JSYG.support.svgUseBBox) {
-				//bbox fait alors rÃ©fÃ©rence Ã  l'Ã©lÃ©ment source donc il faut ajouter les attributs de l'Ã©lÃ©ment lui-mÃªme
+				//bbox fait alors référence à l'élément source donc il faut ajouter les attributs de l'élément lui-même
 				dim.left += parseFloat(this.attr('x'))  || 0;
 				dim.top += parseFloat(this.attr('y')) || 0;
 			}
@@ -411,8 +446,11 @@
 				mtx = this[0].getScreenCTM();
 							
 				if (box) this.attr("viewBox",box);
-																		
-				point = new JSYG.Point(x,y).mtx(mtx);
+				
+				point = svg.createSVGPoint();
+				point.x = x;
+				point.y = y;
+				point = point.matrixTransform(mtx);
 								
 				offset = {
 					left : point.x,
@@ -430,7 +468,6 @@
 			return offset;
 		}
 	};
-	
 	
 	JSYG.prototype.addClass = function(name) {
 		
@@ -618,39 +655,6 @@
 		return this;
 	};
 	
-	JSYG.Point = function(x,y) {
-		
-		if (typeof x === 'object' && y == null) {
-			y = x.y;
-			x = x.x;
-		}
-		
-		this.x = (typeof x == "number") ? x : parseFloat(x);
-		this.y = (typeof y == "number") ? y : parseFloat(y);
-	};
-	
-	JSYG.Point.prototype = {
-			
-		constructor : JSYG.Point,
-		
-		/**
-		 * Applique une matrice de transformation 
-		 * @param mtx instance de JSYG.Matrix (ou SVGMatrix)
-		 * @returns nouvelle instance
-		 */
-		mtx : function(mtx) {
-		
-			if (JSYG.Matrix && (mtx instanceof JSYG.Matrix)) mtx = mtx.mtx;
-			if (!mtx) return new JSYG.Point(this.x,this.y);
-			
-			var point = svg.createSVGPoint();
-			point.x = this.x;
-			point.y = this.y;
-			point = point.matrixTransform(mtx);
-			
-			return new this.constructor(point.x,point.y);
-		}
-	};
 	
 	(function() {
 		
@@ -730,18 +734,41 @@
 		
 	}());
 	
+	////////////////////////////////////////////////////////////
+	//Ces fonctions font appel dans jQuery à this.constructor, ce qui peut
+	//mettre le bazar quand on surcharge les constructeurs
+	JSYG.prototype.pushStack = function( elems ) {
+		var ret = jQuery.merge(new JSYG(), elems );
+		ret.prevObject = this;
+		ret.context = this.context;
+		return ret;
+	};
+	
+	JSYG.prototype.end = function() {
+		return this.prevObject || new JSYG(null);
+	};
+	//////////////////////////////////////////////////////////
+	
 	/**
-	 * Arrondi d'un nombre avec nombre de dÃ©cimales prÃ©cisÃ©
+	 * Arrondi d'un nombre avec nombre de décimales précisé
 	 * @param number
-	 * @param precision nombre de dÃ©cimales
+	 * @param precision nombre de décimales
 	 * @returns {Number}
 	 */
 	JSYG.round = function(number,precision) {
 		return Math.round(number * Math.pow(10,precision)) / Math.pow(10,precision);
 	};
 	
+	/*
+	JSYG.isXMLDoc = function(elem) {
+		
+		var $elem = new JSYG(elem);
+		
+		return $.isXMLDoc($elem[0]) || $elem.isSVG();
+	};*/
 	
-	//RÃ©cupÃ¨re toutes les fonctions statiques
+	
+	//Récupère toutes les fonctions statiques
 	(function() {
 		for (var n in $) {
 			if ($.hasOwnProperty(n) && !JSYG.hasOwnProperty(n)) JSYG[n] = $[n];
@@ -750,4 +777,4 @@
 	
 	return JSYG;
 	
-}));
+});
