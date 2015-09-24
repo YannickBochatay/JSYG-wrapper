@@ -1,22 +1,29 @@
 {
-    "name": "JSYG",
-    "version": "0.1",
+    "name": "jsyg",
     "authors" : ["Yannick Bochatay"],
     "description" : "JSYG makes jQuery work with SVG.",
-  	"main": "dist/JSYG.js",
-  	"dependencies": {
+    "main": "JSYG.js",
+    "moduleType": [
+        "amd",
+        "globals"
+    ],
+    "dependencies": {
         "jquery": "latest"
     },
     "devDependencies": {
         "qunit": "latest",
         "requirejs":"latest"
     },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/YannickBochatay/JSYG.git"
+    },
     "license": "MIT",
-  	"ignore": ["**/.*"],
-	"keywords": [
-		"svg",
-		"jquery",
-		"javascript",
-		"library"
-	]
+    "ignore": ["**/.*","tests","examples","bower_components"],
+    "keywords": [
+        "svg",
+        "jquery",
+        "javascript",
+        "library"
+    ]
 }
