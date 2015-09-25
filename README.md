@@ -19,3 +19,11 @@ rect.offsetParent()[0] === svg[0] // true
 svg.constructor === JSYG // true
 svg instanceof jQuery // true
 ```
+
+
+
+##### Installation with bower
+
+```shell
+bower install jsyg
+```
