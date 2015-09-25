@@ -356,7 +356,7 @@
         }
     };
 	
-    $(function() {
+    (function() {
 		
         if (!svg || typeof document === "undefined") return false;
 		
@@ -382,7 +382,7 @@
         defs.remove();			
         document.body.removeChild(svg);
 		
-    });
+    }());
 	
     JSYG.prototype.position = function() {
 		
