@@ -19,7 +19,7 @@
         "url": "git://github.com/YannickBochatay/JSYG.git"
     },
     "license": "MIT",
-    "ignore": ["**/.*","tests","examples","bower_components"],
+    "ignore": ["**/.*","tests","examples","bower_components","nbproject"],
     "keywords": [
         "svg",
         "jquery",
