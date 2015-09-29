@@ -20,7 +20,14 @@ svg.constructor === JSYG // true
 svg instanceof jQuery // true
 ```
 
+It doesn't work with html strings, only with single tags :
+```javascript
+var rect = JSYG("<rect>").attr({width:500,height:200});
+rect.isSVG(); //true;
 
+var rect = JSYG("<rect width='500' height='200'/>");
+rect.isSVG(); //false;
+```
 
 ##### Installation with bower
 
