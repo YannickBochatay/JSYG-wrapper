@@ -1,12 +1,12 @@
 require.config({
 	 paths: {
 	    "jquery": '../bower_components/jquery/dist/jquery',
-	    "jsyg": '../JSYG'
+	    "jsyg-wrapper": '../JSYG-wrapper'
 	 },
 	 urlArgs: "bust=" + new Date()
 });
 
-require(["jquery","jsyg"],function($,JSYG) {
+require(["jquery","jsyg-wrapper"],function($,JSYG) {
 		
 	module("JSYG core");
 			
