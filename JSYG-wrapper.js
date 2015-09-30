@@ -1,6 +1,6 @@
 (function(root,factory) {
 	
-    if (typeof define == "function" && define.amd) define(["jquery"],factory);
+    if (typeof define == "function" && define.amd) define("jsyg-wrapper",["jquery"],factory);
     else if (!root.jQuery) throw new Error("jQuery is needed");
     else root.JSYG = factory(jQuery);	
 	
