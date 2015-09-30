@@ -1,6 +1,6 @@
 require.config({
 	paths: {
-		"jsyg" : "../JSYG",
+		"jsyg-wrapper" : "../JSYG-wrapper",
 		"jquery": '../bower_components/jquery/dist/jquery'
 	},
 	urlArgs: "bust=" + new Date()
@@ -8,7 +8,7 @@ require.config({
 
 (function() {
 	
-	require(["jsyg"],function($) {
+	require(["jsyg-wrapper"],function($) {
 		
 		var svg = $('<svg>')
 		.width(400).height(400)
