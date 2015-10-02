@@ -235,7 +235,9 @@ require(["jquery","jsyg-wrapper"],function($,JSYG) {
 		
 		equal( rect.width() , 200, "Taille des éléments SVG" );
 		equal( rect.height() , 200, "Taille des éléments SVG" );
-		
+                
+                rect.css("width","50%");
+		equal( rect.css("width") , "250px", "Conversion en pixels de dimensions en pourcentage" );
 		
 	});
 		

@@ -5913,6 +5913,7 @@ jQuery.extend({
 
 	// Get and set the style property on a DOM Node
 	style: function( elem, name, value, extra ) {
+            
 		// Don't set styles on text and comment nodes
 		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 || !elem.style ) {
 			return;
@@ -5928,7 +5929,7 @@ jQuery.extend({
 		// gets hook for the prefixed version
 		// followed by the unprefixed version
 		hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
-
+                
 		// Check if we're setting a value
 		if ( value !== undefined ) {
 			type = typeof value;
