@@ -740,7 +740,7 @@
     JSYG.round = function(number,precision) {
         return Math.round(number * Math.pow(10,precision)) / Math.pow(10,precision);
     };
-	
+    	
     /*
 	JSYG.isXMLDoc = function(elem) {
 		
@@ -749,12 +749,16 @@
 		return $.isXMLDoc($elem[0]) || $elem.isSVG();
 	};*/
 	
-	
-    //Récupère toutes les fonctions statiques
     (function() {
+        
+        //Récupère toutes les fonctions statiques
         for (var n in $) {
             if ($.hasOwnProperty(n) && !JSYG.hasOwnProperty(n)) JSYG[n] = $[n];
         }
+        
+        //garde une référence vers jQuery
+        JSYG.$ = $;
+        
     }());
 	
     return JSYG;
