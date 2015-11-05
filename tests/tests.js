@@ -128,8 +128,8 @@ require(["jquery","jsyg-wrapper"],function($,JSYG) {
 		equal( a.attr("href") , url, "Attribut href sur éléments HTML" );
 		equal( aSVG.attr("href") , url, "Attribut href sur éléments SVG" );
 		
-		a.attrRemove("href");
-		aSVG.attrRemove("href");
+		a.removeAttr("href");
+		aSVG.removeAttr("href");
 		
 		equal( a.attr("href"), "", "retrait de l'attribut href sur éléments HTML" );
 		equal( aSVG.attr("href"), "", "retrait de l'attribut href sur éléments SVG" );
