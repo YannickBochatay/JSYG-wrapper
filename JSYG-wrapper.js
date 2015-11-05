@@ -416,7 +416,7 @@
             }
 
             box = this.attr("viewBox");
-            if (box) this.attrRemove("viewBox");
+            if (box) this.removeAttr("viewBox");
 
             mtx = this[0].getScreenCTM();
 
