@@ -358,7 +358,7 @@
             		
             var $this = new JSYG(this);
 			
-            if ($this.isSVG() && !$this.isSVGroot() && JSYG.svgCssProperties.indexOf(cssProp) != -1) this.setAttribute(cssProp,val);
+            if ($this.isSVG() && JSYG.svgCssProperties.indexOf(cssProp) != -1) this.setAttribute(cssProp,val);
             
             $.fn.css.call($this,prop,val);
         });
@@ -679,7 +679,6 @@
 					
                     default :
                         elem.setAttribute("width",width);
-                        elem.style.width = width;
                 }
 				
                 return width+"px";
@@ -720,7 +719,6 @@
 					
                     default :
                         elem.setAttribute("height",height);
-                        elem.style.height = height;
                 }
 				
                 return height+"px";
