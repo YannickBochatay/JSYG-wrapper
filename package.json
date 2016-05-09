@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/YannickBochatay/JSYG-wrapper/issues"
   },
-  "homepage": "https://github.com/YannickBochatay/JSYG-wrapper#readme"
+  "homepage": "https://github.com/YannickBochatay/JSYG-wrapper#readme",
+  "dependencies": {
+    "jquery": "^2.2.3"
+  }
 }

@@ -1,6 +1,6 @@
 require.config({
     paths: {
-        "jquery": '../bower_components/jquery/dist/jquery',
+        "jquery": '../node_modules/jquery/dist/jquery',
         "jsyg-wrapper": '../JSYG-wrapper'
     },
     urlArgs: "bust=" + new Date()
