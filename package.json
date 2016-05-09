@@ -1,6 +1,6 @@
 {
   "name": "jsyg-wrapper",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "jQuery wrapper to work on svg elements",
   "main": "JSYG-wrapper.js",
   "directories": {
