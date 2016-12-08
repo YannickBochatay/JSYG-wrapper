@@ -651,7 +651,8 @@
 				
             get: function( elem, computed, extra ) {
 				
-                if (!isSVG(elem) || elem.tagName == 'svg' && elem.parentNode && !isSVG(elem.parentNode)) return hookWidthOri.get.apply(null,arguments);
+                if (!isSVG(elem)) return hookWidthOri.get.apply(null,arguments);
+                else if (elem.tagName == 'svg' && elem.parentNode && !isSVG(elem.parentNode)) return elem.getBoundingClientRect().width
                 else try { return elem.getBBox && elem.getBBox().width+"px"; }
                 catch (e) { return null; }
             },
@@ -691,7 +692,8 @@
 				
             get: function( elem, computed, extra ) {
 				
-                if (!isSVG(elem) || elem.tagName == 'svg' && elem.parentNode && !isSVG(elem.parentNode)) return hookHeightOri.get.apply(null,arguments);
+                if (!isSVG(elem)) return hookHeightOri.get.apply(null,arguments);
+                else if (elem.tagName == 'svg' && elem.parentNode && !isSVG(elem.parentNode)) return elem.getBoundingClientRect().height
                 else try { return elem.getBBox && elem.getBBox().height+"px"; }
                 catch (e) { return null; }
             },
