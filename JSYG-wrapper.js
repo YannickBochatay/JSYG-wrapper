@@ -709,7 +709,7 @@
 				
                 height = (typeof value == "function") ? value.call(elem,i,$elem.height()) : value;
 				
-                switch (this.tagName) {
+                switch (elem.tagName) {
                     
                     case 'circle' :
                         matches = rNumNunit.exec(height);
