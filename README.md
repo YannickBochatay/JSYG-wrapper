@@ -2,7 +2,6 @@ JSYG
 ====
 
 JSYG is a jQuery wrapper to work on svg elements.
-Compatible IE9+.
 
 ```javascript
 var svg = JSYG("<svg>").attr({"width":400,"height":500}).appendTo("body");
@@ -29,8 +28,9 @@ var rect = JSYG("<rect width='500' height='200'/>");
 rect.isSVG(); //false;
 ```
 
-##### Installation with bower
+##### Installation with npm or bower
 
 ```shell
+npm install jsyg-wrapper
 bower install jsyg-wrapper
 ```
