@@ -1,7 +1,7 @@
 require.config({
     paths: {
         "jsyg-wrapper" : "../JSYG-wrapper",
-        "jquery": '../bower_components/jquery/dist/jquery'
+        "jquery": '../node_modules/jquery/dist/jquery'
     },
     urlArgs: "bust=" + new Date()
 });
@@ -33,12 +33,10 @@ require(["jsyg-wrapper","jquery"],function($,jQuery) {
         .on("click",function(e) {
 			
             e.preventDefault();
-						
-        $.when(rect.slideUp())
-            .then(function() { return rect.slideDown(); })
-            .then(function() { return rect.fadeOut(); })
-            .then(function() { return rect.fadeIn(); });
-    });
+			
+            $.when(rect.fadeOut())
+            .then(() => rect.fadeIn())            
+        });
     
     var div = jQuery("<div>").appendTo("body");
     div.css({
