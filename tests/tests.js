@@ -297,6 +297,57 @@ require(["jquery","jsyg-wrapper"],function($,JSYG) {
             assert.equal( Math.round(div.offset().top) , Math.round(offsetParent.top+50) , "Position des balises SVG inline dans la page" );
             assert.equal( Math.round(div.offset().left) , Math.round(offsetParent.left+50) , "Position des balises SVG inline dans la page" );
         });
+
+        test("Gestion des parents positionnés", assert => {
+
+            const container = new JSYG("#qunit-fixture")
+            
+            const svg = new JSYG('<svg>')
+                .css({
+                    "position":"absolute",
+                    "top":50,
+                    "left":50,
+                    "width":500,
+                    "height":500
+                })
+                .appendTo(container);
+
+            const rect = new JSYG('<rect>')
+                .attr({
+                    width:100,
+                    height:100,
+                    x:50,
+                    y:50
+                })
+                .appendTo(svg);
+
+            const innerSVG = new JSYG('<svg>')
+                .css({
+                    "position":"absolute",
+                    x:50,
+                    y:50,
+                    width:200,
+                    height:200
+                })
+                .appendTo(svg);
+
+            const innerRect = new JSYG('<rect>')
+                .attr({
+                    width:50,
+                    height:50,
+                    x:50,
+                    y:50
+                })
+                .appendTo(innerSVG);
+
+            assert.equal( svg.offsetParent()[0] , container[0] , "Parent positionné d'un canvas SVG" );
+            assert.equal( rect.offsetParent()[0] , svg[0] , "Parent positionné d'un élément SVG" );
+            assert.equal( rect.offsetParent("farthest")[0] , svg[0] , "Parent positionné le plus éloigné d'un élément SVG" );
+            assert.equal( innerSVG.offsetParent()[0] , svg[0] , "Parent positionné d'un canvas SVG imbriqué" );
+            assert.equal( innerSVG.offsetParent("farthest")[0] , svg[0] , "Parent positionné le plus éloigné d'un canvas SVG imbriqué" );
+            assert.equal( innerRect.offsetParent()[0] , innerSVG[0] , "Parent positionné d'un élément SVG imbriqué" );
+            assert.equal( innerRect.offsetParent("farthest")[0] , svg[0] , "Parent positionné le plus éloigné d'un élément SVG imbriqué" );
+        })
  
     });	
 	

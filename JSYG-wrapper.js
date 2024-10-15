@@ -230,9 +230,9 @@
     };
 
     function getFarthestViewportElement(elmt) {
-        var viewport = elmt.ownerSVGElement;
+        var viewport = elmt.viewportElement;
     
-        while (viewport && viewport.ownerSVGElement) viewport = viewport.ownerSVGElement;
+        while (viewport && viewport.viewportElement) viewport = viewport.viewportElement;
     
         return viewport;
     }
@@ -252,7 +252,7 @@
                 if (!$this.isSVGroot()) {
 					
                     if (arg === 'farthest') elmt = getFarthestViewportElement(this);
-                    else elmt = this.ownerSVGElement;
+                    else elmt = this.viewportElement;
 					
                     if (!elmt) { //les éléments non tracés (dans une balise defs) ne renvoient rien, par simplicité on renvoit la balise svg parente
 						
