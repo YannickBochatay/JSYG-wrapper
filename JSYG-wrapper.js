@@ -228,6 +228,14 @@
         }
         else return $.makeArray(list);		
     };
+
+    function getFarthestViewportElement(elmt) {
+        var viewport = elmt.ownerSVGElement;
+    
+        while (viewport && viewport.ownerSVGElement) viewport = viewport.ownerSVGElement;
+    
+        return viewport;
+    }
 	
     JSYG.prototype.offsetParent = function(arg) {
 		
@@ -243,8 +251,8 @@
 				
                 if (!$this.isSVGroot()) {
 					
-                    if (arg === 'farthest') elmt = this.farthestViewportElement;
-                    else elmt = this.nearestViewportElement;
+                    if (arg === 'farthest') elmt = getFarthestViewportElement(this);
+                    else elmt = this.ownerSVGElement;
 					
                     if (!elmt) { //les éléments non tracés (dans une balise defs) ne renvoient rien, par simplicité on renvoit la balise svg parente
 						
