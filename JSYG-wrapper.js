@@ -121,7 +121,11 @@
     function xlinkHref(val) {
 				
         if (val == null) {
-            return (this.isSVG() ? this[0].getAttributeNS(NS.xlink,'href') : this[0].href) || "";
+            if (this.isSVG()) {
+                return this[0].getAttribute('href') || this[0].getAttributeNS(NS.xlink,'href') || "";
+            } else {
+                return this[0].href || "";
+            }
         }
 				
         this.each(function() {
@@ -129,7 +133,7 @@
             if (isSVG(this)){
 				
                 this.removeAttributeNS(NS.xlink,'href'); //sinon ajoute un nouvel attribut
-                this.setAttributeNS(NS.xlink,'href',val);
+                this.setAttribute('href',val);
             } 
             else this.href = val;
         });
@@ -142,7 +146,7 @@
         this.each(function() {
 				
             if (isSVG(this)) this.removeAttributeNS(NS.xlink,'href');
-            else this.removeAttribute("href");
+            this.removeAttribute("href");
         });
 		
         return this;

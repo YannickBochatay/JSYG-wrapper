@@ -14,7 +14,7 @@ require(["jquery","jsyg-wrapper"],function($,JSYG) {
 
     const { test, module } = QUnit
 		
-    module("JSYG core", () => {
+    module("JSYG wrapper", () => {
 	
         const div = new JSYG('<div>')
         const svg = new JSYG('<svg>')
@@ -132,6 +132,12 @@ require(["jquery","jsyg-wrapper"],function($,JSYG) {
             
             assert.equal( a.attr("href"), "", "retrait de l'attribut href sur éléments HTML" );
             assert.equal( aSVG.attr("href"), "", "retrait de l'attribut href sur éléments SVG" );
+
+            aSVG[0].setAttributeNS(JSYG.ns.xlink, "href", url);
+            assert.equal( aSVG.attr("href"), url, "Attribut xlink:href sur éléments SVG" );
+
+            aSVG.removeAttr("href");
+            assert.equal( aSVG[0].getAttributeNS(JSYG.ns.xlink, "href"), null, "Attribut xlink:href sur éléments SVG" );
             
             a.attr({href:url});
             aSVG.attr({href:url});
@@ -348,7 +354,6 @@ require(["jquery","jsyg-wrapper"],function($,JSYG) {
             assert.equal( innerRect.offsetParent()[0] , innerSVG[0] , "Parent positionné d'un élément SVG imbriqué" );
             assert.equal( innerRect.offsetParent("farthest")[0] , svg[0] , "Parent positionné le plus éloigné d'un élément SVG imbriqué" );
         })
- 
     });	
 	
 });
