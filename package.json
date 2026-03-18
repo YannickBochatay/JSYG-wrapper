@@ -1,14 +1,13 @@
 {
   "name": "jsyg-wrapper",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "description": "jQuery wrapper to work on svg elements",
   "main": "JSYG-wrapper.js",
-  "directories": {
-    "example": "examples",
-    "test": "tests"
-  },
+  "files": ["JSYG-wrapper.js"],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-tests": "esbuild tests/tests.js --bundle --format=esm --outfile=tests/tests.min.js",
+    "build-examples": "esbuild examples/script.js --bundle --format=esm --outfile=examples/script.min.js",
+    "build": "npm run build-tests && npm run build-examples"
   },
   "repository": {
     "type": "git",
@@ -30,7 +29,7 @@
     "jquery": "^3.7.1"
   },
   "devDependencies": {
-    "qunit": "^2.22.0",
-    "requirejs": "^2.3.7"
+    "esbuild": "^0.27.4",
+    "qunit": "^2.25.0"
   }
 }
