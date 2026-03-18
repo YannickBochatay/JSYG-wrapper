@@ -28,9 +28,8 @@ var rect = JSYG("<rect width='500' height='200'/>");
 rect.isSVG(); //false;
 ```
 
-##### Installation with npm or bower
+##### Installation
 
 ```shell
 npm install jsyg-wrapper
-bower install jsyg-wrapper
 ```
