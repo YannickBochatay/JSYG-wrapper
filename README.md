@@ -4,6 +4,8 @@ JSYG
 JSYG is a jQuery wrapper to work on svg elements.
 
 ```javascript
+import JSYG from "jsyg";
+
 var svg = JSYG("<svg>").attr({"width":400,"height":500}).appendTo("body");
 
 var rect = JSYG("<rect>")
@@ -13,10 +15,10 @@ var rect = JSYG("<rect>")
 .appendTo(svg);
 
 rect.position(); // {left:50,top:50}
-rect.offsetParent()[0] === svg[0] // true
+rect.offsetParent()[0] === svg[0]; // true
 
-svg.constructor === JSYG // true
-svg instanceof jQuery // true
+svg.constructor === JSYG; // true
+svg instanceof jQuery; // true
 ```
 
 It doesn't work with html strings, only with single tags :
@@ -32,4 +34,14 @@ rect.isSVG(); //false;
 
 ```shell
 npm install jsyg-wrapper
+```
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "jquery": "node_modules/jquery/dist-module/jquery.module.js",
+      "jsyg": "node_modules/jsyg/JSYG-wrapper.js",
+    }
+  }
+</script>
 ```
