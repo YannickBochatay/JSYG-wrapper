@@ -3,6 +3,8 @@ JSYG
 
 JSYG is a jQuery wrapper to work on svg elements.
 
+## ⚠️ Deprecated. Use [@jsyg/wrapper](https://github.com/YannickBochatay/jsyg-monorepo/tree/main/packages/wrapper) instead.
+
 ```javascript
 import JSYG from "jsyg";
 
