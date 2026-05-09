@@ -3,6 +3,8 @@ JSYG
 
 JSYG is a jQuery wrapper to work on svg elements.
 
+## ⚠️ Deprecated. Use [@jsyg/zoomandpan](https://github.com/YannickBochatay/jsyg-monorepo/tree/main/packages/zoomandpan) instead.
+
 ```javascript
 import JSYG from "jsyg";
 
